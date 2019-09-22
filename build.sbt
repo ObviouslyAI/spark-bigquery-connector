@@ -2,9 +2,9 @@ lazy val commonSettings = Seq(
   organization := "com.google.cloud.spark",
   name := "spark-bigquery",
   version := "0.8.0-beta-SNAPSHOT",
-  scalaVersion := "2.11.8",
-  crossScalaVersions := Seq("2.10.5"),
-  sparkVersion := "2.3.2",
+  scalaVersion := "2.12.8",
+  crossScalaVersions := Seq("2.10.5", "2.12.8"),
+  sparkVersion := "2.4.0",
   spName := "google/spark-bigquery",
   sparkComponents ++= Seq("core", "sql")
 )
@@ -66,7 +66,7 @@ libraryDependencies ++= Seq(
   "com.typesafe.scala-logging" %% "scala-logging" % "3.7.2",
 
 
-  "org.scalatest" %% "scalatest" % "3.0.4" % "test",
+  "org.scalatest" %% "scalatest" % "3.0.7" % "test",
   "org.mockito" % "mockito-all" % "1.10.19" % "test")
     .map(_.excludeAll(excludedOrgs.map(ExclusionRule(_)): _*))
 val renamed = Seq(

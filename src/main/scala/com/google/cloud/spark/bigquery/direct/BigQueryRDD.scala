@@ -51,7 +51,7 @@ class BigQueryRDD(sc: SparkContext,
 
     val client = getClient(options)
     // Taken from FileScanRDD
-    context.addTaskCompletionListener(_ => client.close)
+    context.addTaskCompletionListener[Unit](_ => client.close)
 
     try {
       // TODO(pmkc): unwrap RuntimeExceptions from iterator
