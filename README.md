@@ -93,14 +93,15 @@ To include the connector in your project:
 <dependency>
   <groupId>com.google.cloud.spark</groupId>
   <artifactId>spark-bigquery_${scala.version}</artifactId>
-  <version>0.8.0-beta</version>
+  <version>0.8.1-beta</version>
+  <classifier>shaded</classifier>
 </dependency>
 ```
 
 ### SBT
 
 ```sbt
-libraryDependencies += "com.google.cloud.spark" %% "spark-bigquery" % "0.8.0-beta"
+libraryDependencies += "com.google.cloud.spark" %% "spark-bigquery" % "0.8.1-beta" classifier "shaded"
 ```
 
 ## API
@@ -323,6 +324,18 @@ val otherRows = cachedDF.select("word_count")
 ```
 
 You can also manually specify the `filter` option, which will override automatic pushdown and Spark will do the rest of the filtering in the client.
+
+### Partitioned Tables
+
+The pseudo columns \_PARTITIONDATE and \_PARTITIONTIME are not part of the table schema. Therefore in order to query by the partitions of [partitioned tables](https://cloud.google.com/bigquery/docs/partitioned-tables) do not use the where() method shown above. Instead, add a filter option in the following manner:
+
+```
+val df = spark.read.format("bigquery")
+  .option("table", TABLE)
+  .option("filter", "_PARTITIONDATE > '2019-01-01'")
+  ...
+  .load()
+```
 
 ### Configuring Partitioning
 
